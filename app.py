@@ -31,7 +31,7 @@ def get_spaces():
     connection = get_flask_database_connection(app)
     repository = SpaceRepository(connection)
     spaces = repository.all() 
-    return render_template('spaces/index.html', spaces=spaces)
+    return render_template('spaces/spaces.html', spaces=spaces)
 
 # GET /spaces/new - show the form
 @app.route('/spaces/new', methods=['GET'])
@@ -86,10 +86,25 @@ def create_session():
     if user and user.password == password:
         session["user_id"] = user.id
         session["username"] = user.username
-        return redirect("/test")
+        return redirect("/spaces")
     else:
         return redirect("/login")
 
+@app.route('/users', methods=['POST'])
+def sign_up_user():
+    connection = DatabaseConnection()
+    connection.connect()
+    user_repository = UserRepository(connection)
+    user_details = request.form
+    user = User(username=user_details["username"], password=user_details["password"])
+    user_repository.create(user)
+    return redirect("/spaces")
+    
+@app.route('/users/new', methods=['GET'])
+def sign_up_page():
+    connection = DatabaseConnection()
+    connection.connect()
+    return render_template ("sign_up.html")
     
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
