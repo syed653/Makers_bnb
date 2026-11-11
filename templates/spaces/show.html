@@ -1,0 +1,13 @@
+{% include "_nav.html" %}
+
+<h1>{{ space.name }}</h1>
+<p>{{ space.description }}</p>
+<p>£{{ space.price }} per night</p>
+
+<h2>Book this space</h2>
+<form method="POST" action="/spaces/{{ space.id }}/bookings">
+  <label>Date: <input type="date" name="date"></label>
+  <input type="submit" value="Request booking">
+</form>
+
+<a href="/spaces">Back to all spaces</a>

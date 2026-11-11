@@ -1,0 +1,13 @@
+<link rel="stylesheet" href="/static/style.css">
+
+<nav>
+  {% if session.get('username') %}
+    Logged in as {{ session['username'] }}
+    <form method="POST" action="/logout" style="display:inline">
+      <input type="submit" value="Log out">
+    </form>
+  {% else %}
+    <a href="/login">Log in</a>
+  {% endif %}
+</nav>
+<hr>

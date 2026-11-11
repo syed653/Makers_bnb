@@ -1,9 +1,11 @@
+{% include "_nav.html" %}
+
 <h1>Spaces</h1>
 <a href="/spaces/new">List a new space</a>
 <ul>
   {% for space in spaces %}
     <li>
-      <h2>{{ space.name }}</h2>
+      <h2><a href="/spaces/{{ space.id }}">{{ space.name }}</a></h2>
       <p>{{ space.description }}</p>
       <p>£{{ space.price }} per night</p>
     </li>

@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS bookings;
 DROP TABLE IF EXISTS spaces;
 DROP TABLE IF EXISTS users;
 
@@ -21,7 +22,12 @@ CREATE TABLE spaces (
 INSERT INTO users (username, password) VALUES ('Syed', 'password123!');
 INSERT INTO users (username, password) VALUES ('Riasat Supreme Leader', 'qwerty1');
 
-INSERT INTO spaces (name, description, price, user_id) VALUES ('Cosy Shed', 'Just a shed /n PLEASE NOTE: NO BEN INCLUDED', 100, 1);
+INSERT INTO spaces (name, description, price, user_id) VALUES ('Cosy Shed', 'Just a shed PLEASE NOTE: NO BEN INCLUDED', 100, 1);
 INSERT INTO spaces (name, description, price, user_id) VALUES ('Castle Black', 'Game of Thrones', 100 ,2);
 
-
+CREATE TABLE bookings (
+    id SERIAL PRIMARY KEY,
+    space_id INT REFERENCES spaces(id),
+    user_id INT REFERENCES users(id),
+    date DATE NOT NULL
+);
