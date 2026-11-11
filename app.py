@@ -92,8 +92,7 @@ def get_signup():
 
 @app.route('/users', methods=['POST'])
 def create_user():
-    connection = DatabaseConnection()
-    connection.connect()
+    connection = get_flask_database_connection(app)
     user_repository = UserRepository(connection)
     user_details = request.form
     user = User(username=user_details["username"], password=user_details["password"])
@@ -110,7 +109,7 @@ def get_login_form():
 
 @app.route('/sessions', methods=['POST'])
 def create_session():
-    connection = DatabaseConnection()
+    connection = get_flask_database_connection(app)
     connection.connect()
     user_repository = UserRepository(connection)
 
