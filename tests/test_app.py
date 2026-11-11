@@ -6,18 +6,15 @@ from playwright.sync_api import Page, expect
 We can render the index page
 """
 
-# TODO: re-enable when we build a homepage at / — index route removed for spaces feature
-# def test_get_index(page, test_web_address):
-#     ...
-# def test_get_index(page, test_web_address):
-#     # We load a virtual browser and navigate to the /index page
-#     page.goto(f"http://{test_web_address}/index")
+def test_get_index(page, test_web_address):
+    # We load a virtual browser and navigate to the /index page
+    page.goto(f"http://{test_web_address}/index")
 
-#     # We look at the <p> tag
-#     p_tag = page.locator("p")
+    # We look at the <p> tag
+    p_tag = page.locator("p")
 
-#     # We assert that it has the text "This is the homepage."
-#     expect(p_tag).to_have_text("This is the homepage.")
+    # We assert that it has the text "This is the homepage."
+    expect(p_tag).to_have_text("This is the homepage.")
 
 
 def test_get_spaces_lists_them(page, test_web_address, db_connection):

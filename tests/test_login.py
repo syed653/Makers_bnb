@@ -7,7 +7,7 @@ def test_auth_integration():
     client = app.test_client()
     connection = DatabaseConnection()
     connection.connect()
-    connection.execute("TRUNCATE TABLE users, spaces;")
+    connection.execute("TRUNCATE TABLE bookings, users, spaces;")
     connection.execute("INSERT INTO users (username, password) VALUES ('test', '1234');")
     response = client.post('/login', data={
         'username': 'test',
@@ -17,7 +17,7 @@ def test_auth_integration():
 def test_auth_playwright(page: Page):
     connection = DatabaseConnection()
     connection.connect()
-    connection.execute("TRUNCATE TABLE users, spaces;")
+    connection.execute("TRUNCATE TABLE bookings, users, spaces;")
     connection.execute("INSERT INTO users (username, password) VALUES ('test', '1234');")
 
     page.goto("http://127.0.0.1:5001/login")
@@ -25,4 +25,4 @@ def test_auth_playwright(page: Page):
     page.get_by_label("Password").fill("1234")
     page.get_by_role("button").click()
 
-    assert page.url == "http://127.0.0.1:5001/test"
+    assert page.url == "http://127.0.0.1:5001/spaces"

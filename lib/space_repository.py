@@ -18,3 +18,10 @@ class SpaceRepository:
             [space.name, space.description, space.price, space.user_id]
         )
         return None
+
+    def find(self, space_id):
+        rows = self._connection.execute(
+            'SELECT * FROM spaces WHERE id = %s', [space_id]
+    )
+        row = rows[0]
+        return Space(row["id"], row["name"], row["description"], row["price"], row["user_id"])
