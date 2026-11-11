@@ -58,3 +58,13 @@ input[type="submit"], button {
     cursor: pointer;
 }
 input[type="submit"]:hover, button:hover { background: #99431f; }
+
+.main_h1{
+    display: flex;
+    justify-content: center;
+}
+
+.nav_button{
+    display: flex;
+    justify-content: end;
+}
