@@ -24,11 +24,15 @@ app.secret_key = "some_really_secret_key"
 #   ; open http://localhost:5001/index
 @app.route("/", methods=["GET"])
 def index():
+    # connection = get_flask_database_connection(app)
+    # spaces = SpaceRepository(connection).all()
     delay = random.randint(2, 3)
     return render_template("index.html", delay=delay)
 
 @app.route('/index', methods=['GET'])
 def get_index():
+    # connection = get_flask_database_connection(app)
+    # spaces = SpaceRepository(connection).all()
     delay = random.randint(5, 30)
     return render_template('index.html', delay=delay)
 

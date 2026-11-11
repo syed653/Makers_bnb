@@ -10,15 +10,25 @@
         <link rel="stylesheet" href="/static/style.css" >
     </head>
 
-    <header> 
+    <header>
+        {% if session.get('username') %}
+        Logged in as {{ session['username'] }} 
         <ul class="nav_button">
-        <li><a href = "/login">Login</a></li>
-        <li><a href = "/signup">Sign up</a></li>
+        <li><a href = "/spaces">spaces</a></li>
+        <form method="POST" action="/logout" style="display:inline">
+        <input type="submit" value="Log out">
+        </ul>
+        {% else %}
+        <a class="nav_button" href="/login">Log in</a>
+        <a class="nav_button" href="/signup">sign up</a>
+        {% endif %}
         </ul>
     </header>
     <body>
         <h1 class="main_h1" >Lions BnB</h1>
-    
+
+        
+        
         <img src="static/main-BnB.webp" alt="Main image" width="100%">  
             
     </body>
@@ -26,3 +36,28 @@
         <img src="static/virus alert.jpeg" alt="" style="max-width:300px;">
     </div>
 </html>
+
+
+
+<!-- <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner">
+    {% for space in spaces %}
+
+        <div class="carousel-item {% if loop.index == 1 %} active {% endif %}" id="slide{{ loop.index }}">
+                <h2><a href="/spaces/{{ space.id }}">{{ space.name }}</a></h2>
+                <p>{{ space.description }}</p>
+                <p>£{{ space.price }} per night</p>
+        </div> -->
+
+    
+    {% endfor %} 
+ <!-- </div>
+  <a class="carousel-control-prev" href="#pageCarousel" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon bg-primary" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#pageCarousel" role="button" data-slide="next">
+    <span class="carousel-control-next-icon bg-primary" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div> -->
