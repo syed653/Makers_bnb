@@ -9,6 +9,7 @@ from lib.space import Space
 from lib.booking_repository import BookingRepository
 from lib.booking import Booking
 from lib.login_required import login_required
+import random
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -23,11 +24,14 @@ app.secret_key = "some_really_secret_key"
 #   ; open http://localhost:5001/index
 @app.route("/", methods=["GET"])
 def index():
-    return render_template("index.html")
+    delay = random.randint(2, 3)
+    return render_template("index.html", delay=delay)
 
 @app.route('/index', methods=['GET'])
 def get_index():
-    return render_template('index.html')
+    delay = random.randint(5, 30)
+    return render_template('index.html', delay=delay)
+
 @app.route('/spaces', methods=['GET'])
 def get_spaces():
     connection = get_flask_database_connection(app)
