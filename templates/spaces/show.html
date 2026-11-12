@@ -9,6 +9,11 @@
 <h1>{{ space.name }}</h1>
 <p>{{ space.description }}</p>
 <p>£{{ space.price }} per night</p>
+{% if space.available_from %}
+  <p>Available: {{ space.available_from.strftime('%d/%m/%Y') }} to {{ space.available_to.strftime('%d/%m/%Y') }}</p>
+{% else %}
+  <p>No available dates set</p>
+{% endif %}
 
 <h2>Book this space</h2>
 <form method="POST" action="/spaces/{{ space.id }}/bookings">
