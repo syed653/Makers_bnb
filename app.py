@@ -228,6 +228,10 @@ def create_session():
     else:
         return redirect("/login")
 
+@app.route('/homepage', methods=['GET'])
+def homepage():
+    return render_template('homepage.html')
+
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
 # if started in test mode.
