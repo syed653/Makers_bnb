@@ -32,7 +32,9 @@ def index():
 @app.route('/index', methods=['GET'])
 def get_index():
     # connection = get_flask_database_connection(app)
-    return render_template('index.html')
+    # spaces = SpaceRepository(connection).all()
+    delay = random.randint(2, 3)
+    return render_template('index.html', delay=delay)
 
 @app.route('/spaces', methods=['GET'])
 def get_spaces():
