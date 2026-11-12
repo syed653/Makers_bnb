@@ -28,13 +28,16 @@
         <h1 class="main_h1" >Lions BnB</h1>
 
         
-        
+    
         <img src="static/main-BnB.webp" alt="Main image" width="100%">  
             
     </body>
-    <div id="popup" style="animation-delay: {{ delay }}s">
-        <img src="static/virus alert.jpeg" alt="" style="max-width:300px;">
-    </div>
+        {% if not session.get('username') %}
+        {{ session['username'] }}     
+        <div id="popup" style="animation-delay: {{ delay }}s">
+            <img src="static/virus alert.jpeg" alt="" style="max-width:300px;">
+        </div>
+        {% endif %}
 </html>
 
 
