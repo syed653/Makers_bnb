@@ -17,5 +17,8 @@
 
   <button type="submit">Login</button>
 </form>
+{% if error %}
+  <p>{{ error }}</p>
+{% endif %}
 
 <a href="/signup">Need an account? Sign up</a>

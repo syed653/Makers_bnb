@@ -228,7 +228,7 @@ def create_session():
         session["username"] = user.username
         return redirect("/spaces")
     else:
-        return redirect("/login")
+        return render_template("login.html", error="Incorrect username or password")
 
 @app.route('/homepage', methods=['GET'])
 def homepage():
