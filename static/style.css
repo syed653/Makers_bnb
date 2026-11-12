@@ -93,3 +93,17 @@ input[type="submit"]:hover, button:hover { background: #99431f; }
     90%  { opacity: 1; }
     100% { opacity: 0; visibility: hidden; }
   }
+
+.button-link {
+    display: inline-block;
+    background: #b5542f;
+    color: #fff;
+    text-decoration: none;
+    padding: 9px 18px;
+    border-radius: 6px;
+    font-size: 1rem;
+    line-height: normal;
+}
+.button-link:hover {
+    background: #99431f;
+}

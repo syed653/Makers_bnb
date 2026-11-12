@@ -109,6 +109,87 @@ def get_space(id):
 def get_signup():
     return render_template('signup.html')
 
+# GET /bookings — my requests (top) + requests for my spaces (bottom)
+@app.route('/bookings', methods=['GET'])
+@login_required
+def get_bookings():
+    connection = get_flask_database_connection(app)
+    booking_repository = BookingRepository(connection)
+    space_repository = SpaceRepository(connection)
+    user_repository = UserRepository(connection)
+
+    user_id = session['user_id']
+
+    # Top half: my own requests (attach each space so we can show its name)
+    my_requests = []
+    for booking in booking_repository.find_by_user(user_id):
+        space = space_repository.find(booking.space_id)
+        my_requests.append({'booking': booking, 'space': space})
+
+    # Bottom half: pending requests for spaces I own
+    owner_requests = []
+    for booking in booking_repository.find_pending_by_owner(user_id):
+        space = space_repository.find(booking.space_id)
+        requester = user_repository.find(booking.user_id)
+        owner_requests.append({'booking': booking, 'space': space, 'requester': requester})
+
+    return render_template('bookings/index.html',
+                           my_requests=my_requests,
+                           owner_requests=owner_requests)
+
+# POST /bookings/<id>/approve — owner approves a request
+@app.route('/bookings/<int:id>/approve', methods=['POST'])
+@login_required
+def approve_booking(id):
+    connection = get_flask_database_connection(app)
+    booking_repository = BookingRepository(connection)
+    space_repository = SpaceRepository(connection)
+
+    booking = booking_repository.find(id)
+    space = space_repository.find(booking.space_id)
+
+    # Only the owner of the space can approve
+    if space.user_id != session['user_id']:
+        return "You can only approve requests for your own spaces.", 403
+
+    booking_repository.update_status(id, 'confirmed')
+    return redirect('/bookings')
+
+
+# POST /bookings/<id>/reject — owner rejects a request
+@app.route('/bookings/<int:id>/reject', methods=['POST'])
+@login_required
+def reject_booking(id):
+    connection = get_flask_database_connection(app)
+    booking_repository = BookingRepository(connection)
+    space_repository = SpaceRepository(connection)
+
+    booking = booking_repository.find(id)
+    space = space_repository.find(booking.space_id)
+
+    # Only the owner of the space can reject
+    if space.user_id != session['user_id']:
+        return "You can only reject requests for your own spaces.", 403
+
+    booking_repository.update_status(id, 'denied')
+    return redirect('/bookings')
+
+# POST /bookings/<id>/cancel — guest cancels their own request
+@app.route('/bookings/<int:id>/cancel', methods=['POST'])
+@login_required
+def cancel_booking(id):
+    connection = get_flask_database_connection(app)
+    booking_repository = BookingRepository(connection)
+
+    booking = booking_repository.find(id)
+
+    # Only the person who made the booking can cancel it
+    if booking.user_id != session['user_id']:
+        return "You can only cancel your own bookings.", 403
+
+    booking_repository.delete(id)
+    return redirect('/bookings')
+
 
 
 

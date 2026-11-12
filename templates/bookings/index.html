@@ -1,0 +1,43 @@
+{% include "_nav.html" %}
+
+<h1>Bookings</h1>
+
+<h2>Your requests</h2>
+{% if my_requests %}
+  <ul>
+    {% for item in my_requests %}
+      <li>
+        {{ item.space.name }} — {{ item.booking.date.strftime('%d/%m/%Y') }}
+        {% if item.booking.status == 'confirmed' %}
+          <span style="color: green;">Confirmed</span>
+        {% elif item.booking.status == 'denied' %}
+          <span style="color: red;">Denied</span>
+        {% else %}
+          <span style="color: orange;">Pending</span>
+        {% endif %}
+        <form method="POST" action="/bookings/{{ item.booking.id }}/cancel" style="display:inline">
+          <input type="submit" value="Cancel">
+        </form>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>You haven't requested any bookings yet.</p>
+{% endif %}
+
+{% if owner_requests %}
+  <h2>New booking requests for your spaces</h2>
+  <ul>
+    {% for item in owner_requests %}
+      <li>
+                {{ item.space.name }} — {{ item.booking.date.strftime('%d/%m/%Y') }} — requested by {{ item.requester.username }}
+        <form method="POST" action="/bookings/{{ item.booking.id }}/approve" style="display:inline">
+          <input type="submit" value="Approve">
+        </form>
+        <form method="POST" action="/bookings/{{ item.booking.id }}/reject" style="display:inline">
+          <input type="submit" value="Reject">
+        </form>
+      </li>
+    {% endfor %}
+  </ul>
+{% endif %}
