@@ -20,5 +20,7 @@
   <label>Date: <input type="date" name="date"></label>
   <input type="submit" value="Request booking">
 </form>
-
+{% for message in get_flashed_messages() %}
+  <p>{{ message }}</p>
+{% endfor %}
 <a href="/spaces">Back to all spaces</a>
