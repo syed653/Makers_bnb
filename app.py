@@ -9,6 +9,7 @@ from lib.space import Space
 from lib.booking_repository import BookingRepository
 from lib.booking import Booking
 from lib.login_required import login_required
+from datetime import datetime
 import random
 
 # Create a new Flask app
@@ -53,19 +54,32 @@ def new_space():
 def create_space():
     connection = get_flask_database_connection(app)
     repository = SpaceRepository(connection)
-    space = Space(None, request.form['name'], request.form['description'], request.form['price'], session['user_id'])
+    space = Space(None, request.form['name'], request.form['description'], request.form['price'], session['user_id'], request.form['available_from'], request.form['available_to'])
     repository.create(space)
     return redirect('/spaces')
 
+# POST /spaces/<id>/bookings — request a booking
 # POST /spaces/<id>/bookings — request a booking
 @app.route('/spaces/<int:id>/bookings', methods=['POST'])
 @login_required
 def create_booking(id):
     connection = get_flask_database_connection(app)
     booking_repository = BookingRepository(connection)
-    date = request.form['date']
+    space_repository = SpaceRepository(connection)
 
-    # double-booking guard
+    date = request.form['date']
+    space = space_repository.find(id)
+
+    # Check the space has available dates set
+    if space.available_from is None or space.available_to is None:
+        return "Sorry, this space has no available dates set.", 400
+
+    # Check the requested date is within the available range
+    requested = datetime.strptime(date, "%Y-%m-%d").date()
+    if requested < space.available_from or requested > space.available_to:
+        return "Sorry, that date is outside this space's available dates.", 400
+
+    # Double-booking guard (C2)
     if not booking_repository.is_date_available(id, date):
         return "Sorry, that date is already booked for this space.", 400
 
