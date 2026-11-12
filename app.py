@@ -199,7 +199,9 @@ def create_user():
     user_repository = UserRepository(connection)
     user_details = request.form
     user = User(username=user_details["username"], password=user_details["password"])
-    user_repository.create(user)
+    error = user_repository.create(user)
+    if error:
+        return render_template("signup.html", error=error)
     return redirect("/index")
 
 
