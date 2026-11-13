@@ -74,13 +74,34 @@ input[type="submit"]:hover, button:hover { background: #99431f; }
   #popup {
     position: fixed; top: 50%; left: 50%;
     transform: translate(-50%, -50%); z-index: 1000;
-    background: white; padding: 16px; border-radius: 8px;
+    background: white; padding: 0px; border-radius: 1px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     opacity: 0; visibility: hidden; pointer-events: none;
-    animation: popup-show 2s forwards;
+    animation: popup-show 5s steps(1) forwards;
   }
 
-  @keyframes popup-show {
+  /* @keyframes popup-show {
+    0%   { opacity: 0; visibility: visible; }
+    10%  { opacity: 1; left:0%}
+    90%  { opacity: 1; left:100%}
+    100% { opacity: 0; visibility: hidden; }
+  } */
+@keyframes popup-show {
+    0%  { opacity: 0; left: 50%; visibility: visible;}
+    10%  { opacity: 1; left: 60%; }
+    20%  { opacity: 1; left: 50%; }
+    30%  { opacity: 1; left: 60%; }
+    40%  { opacity: 1; left: 50%; }
+    50%  { opacity: 1; left: 60%; }
+    60%  { opacity: 1; left: 50%; }
+    70%  { opacity: 1; left: 60%; }
+    80%  { opacity: 1; left: 50%; }
+    90%  { opacity: 1; left: 60%; }
+    100% { opacity: 0; left: 50%;visibility: hidden;  }
+    }
+
+
+    /* @keyframes popup-show {
     0%   { opacity: 0; visibility: visible; }
     10%  { opacity: 1; }
     20%  { opacity: 0; }
@@ -92,7 +113,8 @@ input[type="submit"]:hover, button:hover { background: #99431f; }
     80% { opacity: 0; }
     90%  { opacity: 1; }
     100% { opacity: 0; visibility: hidden; }
-  }
+  } */
+
 
 .button-link {
     display: inline-block;

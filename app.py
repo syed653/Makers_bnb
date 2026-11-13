@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, render_template, redirect, session
+from flask import Flask, request, render_template, redirect, session, flash
 from lib.database_connection import get_flask_database_connection
 from lib.database_connection import DatabaseConnection
 from user import User
@@ -70,18 +70,18 @@ def create_booking(id):
     date = request.form['date']
     space = space_repository.find(id)
 
-    # Check the space has available dates set
     if space.available_from is None or space.available_to is None:
-        return "Sorry, this space has no available dates set.", 400
+        flash("Sorry, this space has no available dates set.")
+        return redirect(f'/spaces/{id}')
 
-    # Check the requested date is within the available range
     requested = datetime.strptime(date, "%Y-%m-%d").date()
     if requested < space.available_from or requested > space.available_to:
-        return "Sorry, that date is outside this space's available dates.", 400
+        flash("Sorry, that date is outside this space's available dates.")
+        return redirect(f'/spaces/{id}')
 
-    # Double-booking guard (C2)
     if not booking_repository.is_date_available(id, date):
-        return "Sorry, that date is already booked for this space.", 400
+        flash("Sorry, that date is already booked for this space.")
+        return redirect(f'/spaces/{id}')
 
     booking = Booking(None, id, session['user_id'], date)
     booking_repository.create(booking)
@@ -199,7 +199,9 @@ def create_user():
     user_repository = UserRepository(connection)
     user_details = request.form
     user = User(username=user_details["username"], password=user_details["password"])
-    user_repository.create(user)
+    error = user_repository.create(user)
+    if error:
+        return render_template("signup.html", error=error)
     return redirect("/index")
 
 
@@ -226,11 +228,11 @@ def create_session():
         session["username"] = user.username
         return redirect("/spaces")
     else:
-        return redirect("/login")
+        return render_template("login.html", error="Incorrect username or password")
 
-@app.route('/homepage', methods=['GET'])
+@app.route('/test', methods=['GET'])
 def homepage():
-    return render_template('homepage.html')
+    return render_template('test_new.html')
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
