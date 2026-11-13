@@ -1,12 +1,17 @@
-<button command="show-modal" commandfor="my-dialog">Open dialog</button>
+   <link rel="stylesheet" href="/static/style.css" >
 
-<dialog id="my-dialog">
-  <img src="static/virus gif.gif" alt="" style="max-width:300px;">
-  <audio controls autoplay></audio>
-  <source src="static/Mi Lion_20_27.mp3" type="audio/mpeg" >
-  </audio>
-  <button commandfor="my-dialog">Close</button>
-</dialog>
+    <ul class="nav_button">
+    <li><a href = "/">Home</a></li>
+    </ul>
+
+<!-- {% for i in range(30) %}
+<div class="fake-popup"
+style="top: {{ range(0, 70) | random }}%;
+left: {{ range(0, 70) | random }}%;
+animation-delay: {{ i * 0.3 }}s;">
+<img src="/static/virus_gif.gif" alt="" style="max-width:300px;">
+</div>
+{% endfor %} -->
 
 
 <!-- <button popovertarget="my-dialog">Open dialog</button>
@@ -17,15 +22,34 @@
 </dialog> -->
 
 <video width="400" controls autoplay loop muted>
-  <source src="static/Four Lions can i have 12 bottles of bleach please_115_120.mp4" type="video/mp4">
+  <source src="static/fourlions.mp4" type="video/mp4">
   <source src="mov_bbb.ogg" type="video/ogg">
   Your browser does not support HTML video.
 </video>
 
 
+<figure>
+  <figcaption>Listen to the T&Cs</figcaption>
+  <audio controls autoplay>
+    <source src="horse.ogg" type="audio/ogg">
+    <source src="static/Mi Lion_20_27.mp3" type="audio/mpeg" >
+  </audio>
+</figure> 
 
-<audio controls autoplay>
-  <source src="horse.ogg" type="audio/ogg">
-  <source src="static/Mi Lion_20_27.mp3" type="audio/mpeg" >
-Your browser does not support the audio element.
-</audio>
+<tile>Terms and Conditions</tile>
+<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus</p>
+
+
+<button command="show-modal" commandfor="my-dialog">Accept T&Cs</button>
+
+<dialog id="my-dialog">
+  {% for i in range(70) %}
+    <div class="fake-popup"
+    style="top: {{ range(0, 70) | random }}%;
+    left: {{ range(0, 70) | random }}%;
+    animation-delay: {{ i * 0.05 }}s;">
+    <img src="/static/virus_gif.gif" alt="" style="max-width:300px;">
+    </div>
+  {% endfor %}
+  <button commandfor="my-dialog">Close</button>
+</dialog><br>

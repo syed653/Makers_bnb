@@ -129,3 +129,35 @@ input[type="submit"]:hover, button:hover { background: #99431f; }
 .button-link:hover {
     background: #99431f;
 }
+
+.fake-popup {
+  position: fixed;
+  z-index: 1000;
+  background: white;
+  border: 2px solid #333;
+  padding: 10px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  opacity: 0;
+  pointer-events: none;
+  animation: pop-in 0.1s forwards;
+}
+
+@keyframes pop-in {
+  to { opacity: 1; }
+}
+
+#my-dialog {
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: none;
+  animation: grow 0.2s forwards;
+}
+
+@keyframes grow {
+  from { transform: scale(0.2); }
+  to   { transform: scale(1); }
+}

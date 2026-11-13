@@ -20,7 +20,24 @@
   <label>Date: <input type="date" name="date"></label>
   <input type="submit" value="Request booking">
 </form>
-{% for message in get_flashed_messages() %}
-  <p>{{ message }}</p>
+
+{% for category, message in get_flashed_messages(with_categories=true) %}
+  <div class="flash">
+    <p>{{ message }}</p>
+    {% if category == "error" %}
+      <video width="400" autoplay loop muted>
+        <source src="/static/fourlions.mp4" type="video/mp4">
+      </video>
+    {% endif %}
+  </div>
 {% endfor %}
+
 <a href="/spaces">Back to all spaces</a>
+
+
+
+<!-- <dialog id="my-dialog">
+    <img src="/static/payment.gif" alt="" style="max-width:300px;">
+    </div>
+  <button commandfor="my-dialog">Close</button>
+</dialog><br> -->

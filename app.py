@@ -71,16 +71,16 @@ def create_booking(id):
     space = space_repository.find(id)
 
     if space.available_from is None or space.available_to is None:
-        flash("Sorry, this space has no available dates set.")
+        flash("Sorry, this space has no available dates set.","error")
         return redirect(f'/spaces/{id}')
 
     requested = datetime.strptime(date, "%Y-%m-%d").date()
     if requested < space.available_from or requested > space.available_to:
-        flash("Sorry, that date is outside this space's available dates.")
+        flash("Sorry, that date is outside this space's available dates.","error")
         return redirect(f'/spaces/{id}')
 
     if not booking_repository.is_date_available(id, date):
-        flash("Sorry, that date is already booked for this space.")
+        flash("Sorry, that date is already booked for this space.","error")
         return redirect(f'/spaces/{id}')
 
     booking = Booking(None, id, session['user_id'], date)
@@ -91,10 +91,6 @@ def create_booking(id):
 def logout():
     session.clear()
     return redirect('/login')
-
-@app.route('/test', methods=['GET'])
-def get_test():
-    return render_template('test.html')
 
 # GET /spaces/<id> — show one space
 @app.route('/spaces/<int:id>', methods=['GET'])
